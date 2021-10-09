@@ -1,150 +1,44 @@
 <template>
-  <div class="main-content w-full flex-1 bg-gray-100 mt-12 md:mt-15 pb-24 md:pb-5">
-    <div class="order-nav">
-      <div class="bg-gray-800 pt-3">
-        <div
-            class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
-          <h3 class="font-bold pl-2 text-2xl">Products</h3>
-          <router-link :to="{name:'adminProductCreate'}"
-                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
-            <i class="fas fa-plus-square"></i> Add new
-          </router-link>
-        </div>
+  <div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
+    <div
+        class="flex flex-col w-full md:w-3/12 text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+      <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+        <a href="#"
+           class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Customer
+          Panel</a>
       </div>
-      <div class="search-div flex p-5  flex-col md:flex-row pb-3">
-        <form @submit.prevent="getLists()" class="w-full float-right max-w-sm">
-          <div class="flex items-center border-b border-teal-500 py-2">
-            <input type="text" placeholder="Search..." v-model="form.search" autocomplete="off"
-                   class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-            <button
-                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                type="submit">
-              Search
-            </button>
-          </div>
-        </form>
-      </div>
+      <nav class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
+        <a @click="dashboard_component='profile'"
+           v-bind:class="[dashboard_component =='profile' ? 'bg-gray-200' : '']"
+           class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900  rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+           href="#">Profile</a>
+        <a @click="dashboard_component='orders'"
+           v-bind:class="[dashboard_component =='orders' ? 'bg-gray-200' : '']"
+           class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+           href="#">Orders</a>
+        <a @click="dashboard_component='profile'"
+           class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+           href="#">About</a>
+      </nav>
     </div>
-    <div class="p-5 md:flex-row">
-      <div class="py-2 -my-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 w-full">
-        <div
-            class="inline-block min-w-full border-b border-gray-200 shadow sm:rounded-lg">
-          <table class="min-w-full text-left">
-            <thead>
-            <tr>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> #</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Customer</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Subtotal</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Shipping Cost</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Grand Total</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Status</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Action</th>
-            </tr>
-            </thead>
-            <tbody class="bg-white">
-            <template v-if="orders.length">
-              <tr v-for="(order, index) in orders">
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">{{ ++index }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  Name: {{ order.user.name }}<br>
-                  Email: {{ order.user.email }}<br>
-                  Phone: {{ order.user.phone }}
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  {{ order.sub_total | numberFormat }}
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  {{ order.shipping_cost | numberFormat }}
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  {{ order.grand_total | numberFormat }}
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  {{ order.status }}
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  <button title="Delete" @click="destroy(order.id)" type="button"
-                          class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </template>
-            <template v-if="!orders.length">
-              <tr>
-                <th class="text-center font-weight-bolder h-20" colspan="100%">No data found</th>
-              </tr>
-            </template>
-            </tbody>
-          </table>
-          <pagination v-if="orders.length > 0" :pagination="pagination" @paginate="getLists()" :offset="5"/>
-        </div>
-      </div>
+    <div
+        class="flex flex-col w-full md:w-9/12 text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+      <component :is="dashboard_component"></component>
     </div>
   </div>
 </template>
 
 <script>
-import ApiService          from "@/services/api.service";
-import NotificationService from "@/services/notification.service";
-import Pagination          from "@/components/Pagination";
+import profile from './Profile'
+import orders  from './Orders'
 
 export default {
-  name      : "UserDashboard",
-  components: {Pagination},
+  name      : "userDashboard",
+  components: {profile, orders},
   data      : () => ({
-    pagination: {
-      current_page: 1,
-    },
-    form      : {
-      per_page: 15,
-      search  : '',
-    },
-    orders    : [],
+    dashboard_component: 'profile'
   }),
-  mounted() {
-    this.getLists();
-  },
-  methods: {
-    getLists() {
-      this.$Progress.start();
-      let params = {
-        per_page: this.form.per_page,
-        page    : this.pagination.current_page,
-        search  : this.form.search,
-      };
-      ApiService.get(`/admin/orders`, {params: params}).then((res) => {
-        this.orders     = res.data.data;
-        this.pagination = res.data.meta;
-        this.$Progress.finish();
-      }).catch(error => {
-        this.$Progress.fail();
-        NotificationService.error(error.response.data.message);
-      })
-    },
-    destroy(id) {
-      Swal.fire({
-        title             : 'Are you sure?',
-        text              : "You won't be able to revert this!",
-        icon              : 'warning',
-        showCancelButton  : true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor : '#d33',
-        confirmButtonText : 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          ApiService.delete(`/admin/orders/${id}`,).then(res => {
-            this.getLists();
-            NotificationService.success(res.data.message);
-          }).catch(error => {
-            NotificationService.error(error.response.data.message);
-          })
-        }
-      }).catch(error => {
-        NotificationService.error(error.response.data.message);
-      })
-    },
-  }
+
 }
 </script>
 

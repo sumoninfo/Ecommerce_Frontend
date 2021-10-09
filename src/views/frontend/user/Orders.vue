@@ -1,12 +1,10 @@
 <template>
-  <div class="main-content w-full flex-1 bg-gray-100 mt-12 md:mt-15 pb-24 md:pb-5">
+  <div class="pt-3">
     <div class="order-nav">
-      <div class="bg-gray-800 pt-3">
-        <div
-            class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
-          <h3 class="font-bold pl-2 text-2xl">Orders</h3>
-        </div>
-      </div>
+      <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl pb-3"
+         href="#">
+        Orders
+      </a>
       <form @submit.prevent="getLists()" class="space-y-4 text-gray-700 p-5  flex-col md:flex-row pb-3">
         <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
           <select v-model="form.status" @change="getLists()"
@@ -39,7 +37,6 @@
             <thead>
             <tr>
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">Order No.</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Customer</th>
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Subtotal</th>
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Shipping Cost</th>
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Grand Total</th>
@@ -52,11 +49,6 @@
               <tr v-for="(order, index) in orders">
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">{{ order.order_no }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  Name: {{ order.user.name }}<br>
-                  Email: {{ order.user.email }}<br>
-                  Phone: {{ order.user.phone }}
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   {{ order.sub_total | numberFormat }}
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -66,18 +58,7 @@
                   {{ order.grand_total | numberFormat }}
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-
                   <span class="bg-indigo-700 mb-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 rounded">{{ order.status }}</span>
-                  <select v-model="order.status" @change="onchangeStatus(order.id, $event)"
-                          class="w-full px-2 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="">Sort By Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Rejected">Rejected</option>
-                  </select>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <button v-if="order.status == 'Pending'" title="Delete" @click="destroy(order.id)" type="button"
@@ -107,7 +88,7 @@ import NotificationService from "@/services/notification.service";
 import Pagination          from "@/components/Pagination";
 
 export default {
-  name      : "AdminOrders",
+  name      : "CustomerOrders",
   components: {Pagination},
   data      : () => ({
     pagination: {
@@ -139,7 +120,7 @@ export default {
         ...this.form,
         page: this.pagination.current_page
       }
-      ApiService.get(`/admin/orders`, {params: params}).then((res) => {
+      ApiService.get(`/user/orders`, {params: params}).then((res) => {
         this.orders     = res.data.data;
         this.pagination = res.data.meta;
         this.$Progress.finish();

@@ -49,6 +49,7 @@ export default {
         ApiService.post('/admin/logout').then(response => {
           JwtService.destroyToken();
           this.$router.push({name: "adminLogin"});
+          this.$store.commit("GETUSER", {});
           NotificationService.success('Logout successful');
         }).catch(error => {
           NotificationService.error(error.response.data.message);
