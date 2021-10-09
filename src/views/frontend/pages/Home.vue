@@ -90,6 +90,7 @@ export default {
         image     : product.image,
         quantity  : 1,
         price     : product.price,
+        sub_total : product.price * 1,
       }
       this.$store.commit('addToCart', cart)
     },

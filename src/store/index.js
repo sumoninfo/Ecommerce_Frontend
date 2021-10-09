@@ -29,6 +29,7 @@ export default new Vuex.Store({
             let found = state.carts.find(product => product.product_id == item.product_id);
             if (found) {
                 found.quantity++;
+                found.sub_total = found.price * found.quantity;
             } else {
                 state.carts.push(item);
             }
@@ -37,7 +38,8 @@ export default new Vuex.Store({
         updateToCart(state, updated_cart) {
             let found = state.carts.find(product => product.product_id == updated_cart.product_id);
             if (updated_cart.quantity > 0) {
-                found.quantity = updated_cart.quantity;
+                found.quantity  = updated_cart.quantity;
+                found.sub_total = found.price * updated_cart.quantity;
                 this.commit('SAVE_CART');
             } else {
                 this.commit('removeFromCart', found);
@@ -51,6 +53,10 @@ export default new Vuex.Store({
         removeFromCart(state, item) {
             let index = state.carts.indexOf(item);
             state.carts.splice(index, 1);
+            this.commit('SAVE_CART');
+        },
+        removeAllCarts(state) {
+            window.localStorage.removeItem('carts');
             this.commit('SAVE_CART');
         },
     },
