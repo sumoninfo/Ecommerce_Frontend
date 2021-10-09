@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 import auth from "./modules/auth";
 // import cart from "./modules/cart/index";
-
+import NotificationService from "@/services/notification.service";
 let carts = window.localStorage.getItem('carts');
 
 
@@ -30,8 +30,10 @@ export default new Vuex.Store({
             if (found) {
                 found.quantity++;
                 found.sub_total = found.price * found.quantity;
+                NotificationService.success('Updated to cart');
             } else {
                 state.carts.push(item);
+                NotificationService.success('Added to cart');
             }
             this.commit('SAVE_CART');
         },
@@ -41,8 +43,10 @@ export default new Vuex.Store({
                 found.quantity  = updated_cart.quantity;
                 found.sub_total = found.price * updated_cart.quantity;
                 this.commit('SAVE_CART');
+                NotificationService.success('Updated cart');
             } else {
                 this.commit('removeFromCart', found);
+                NotificationService.success('Removed cart');
             }
         },
 
@@ -54,6 +58,7 @@ export default new Vuex.Store({
             let index = state.carts.indexOf(item);
             state.carts.splice(index, 1);
             this.commit('SAVE_CART');
+            NotificationService.success('Removed cart');
         },
         removeAllCarts(state) {
             window.localStorage.removeItem('carts');

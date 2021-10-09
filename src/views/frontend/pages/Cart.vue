@@ -112,6 +112,10 @@ export default {
     }
   },
   mounted() {
+    if (!this.carts.length) {
+      this.$router.push({name: "home"});
+      NotificationService.success('Please Add to cart First');
+    }
     this.user_logged = JwtService.getLoggedUser() == 'user' ? true : false;
   },
   methods: {
@@ -156,7 +160,7 @@ export default {
         NotificationService.error(error.response.data.message);
       })
     }
-  }
+  },
 }
 </script>
 
