@@ -15,32 +15,22 @@
     </div>
     <div>
       <ul class="pagination inline-flex">
-        <li class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page <= 1 }">
-          <a href="#" class="page-link" @click.prevent="changePage(1)">
-            <i class="fas fa-angle-double-left"></i>
-          </a>
+        <li @click.prevent="changePage(1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page <= 1 }">
+          <i class="fas fa-angle-double-left"></i>
         </li>
-        <li class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page <= 1 }">
-          <a href="#" class="page-link" @click.prevent="changePage(pagination.current_page - 1)">
-            <i class="fas fa-arrow-left"></i>
-          </a>
+        <li @click.prevent="changePage(pagination.current_page - 1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page <= 1 }">
+          <i class="fas fa-arrow-left"></i>
         </li>
 
-        <li class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" v-for="page in pages" :key="page" :class="isCurrentPage(page) ? 'active' : ''">
-          <a href="#" class="page-link" @click.prevent="changePage(page)">{{ page }}
-            <span v-if="isCurrentPage(page)" class="sr-only">(current)</span>
-          </a>
+        <li @click.prevent="changePage(page)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" v-for="page in pages" :key="page" :class="isCurrentPage(page) ? 'active' : ''">
+          {{ page }}<span v-if="isCurrentPage(page)" class="sr-only">(current)</span>
         </li>
 
-        <li class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page >= pagination.last_page }">
-          <a href="#" class="page-link" @click.prevent="changePage(pagination.current_page + 1)">
-            <i class="fas fa-arrow-right"></i>
-          </a>
+        <li @click.prevent="changePage(pagination.current_page + 1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page >= pagination.last_page }">
+          <i class="fas fa-arrow-right"></i>
         </li>
-        <li class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page >= pagination.last_page }">
-          <a href="#" class="page-link" @click.prevent="changePage(pagination.last_page)">
-            <i class="fas fa-angle-double-right"></i>
-          </a>
+        <li @click.prevent="changePage(pagination.last_page)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" :class="{ 'opacity-50 cursor-not-allowed': pagination.current_page >= pagination.last_page }">
+          <i class="fas fa-angle-double-right"></i>
         </li>
       </ul>
     </div>
@@ -87,3 +77,4 @@ export default {
   }
 }
 </script>
+
