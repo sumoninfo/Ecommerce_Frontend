@@ -41,7 +41,26 @@
       </div>
 
       <div class="order-2 md:order-3 flex items-center" id="nav-content">
-        <router-link class="inline-block no-underline hover:text-black" :to="{name:'userLogin'}">
+        <div v-if="$store.state.auth.user.id" class="relative inline-block">
+          <button @click="toggleDD('myDropdown')" class="drop-button focus:outline-none text-black"><span
+              class="pr-2"><i class="em em-robot_face"></i></span> Hi, {{ $root.user.name }}
+            <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+            </svg>
+          </button>
+          <div id="myDropdown"
+               class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30 invisible">
+            <router-link :to="{name:'userDashboard'}"
+                         class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
+                class="fa fa-user fa-fw"></i> Dashboard
+            </router-link>
+            <div class="border border-gray-800"></div>
+            <a href="#" @click="logout()"
+               class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
+                class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+          </div>
+        </div>
+        <router-link v-else class="inline-block no-underline hover:text-black" :to="{name:'userLogin'}">
           <svg class="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                viewBox="0 0 24 24">
             <circle fill="none" cx="12" cy="7" r="3"/>
@@ -49,7 +68,6 @@
                 d="M12 2C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5S14.757 2 12 2zM12 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3S13.654 10 12 10zM21 21v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h2v-1c0-2.757 2.243-5 5-5h4c2.757 0 5 2.243 5 5v1H21z"/>
           </svg>
         </router-link>
-
         <router-link :to="{name:'cartPage'}" class="pl-3 relative flex inline-block no-underline hover:text-black"
                      href="#">
           <svg class="flex-1 w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -60,31 +78,38 @@
             <circle cx="17.5" cy="18.5" r="1.5"/>
           </svg>
           <span
-              class="absolute right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm  leading-tight text-center">{{ totalCarts }}</span>
+              class="absolute right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm  leading-tight text-center">{{
+              totalCarts
+            }}</span>
         </router-link>
-
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-import ApiService                         from "@/services/api.service";
-import * as JwtService                    from "@/services/jwt.service";
-import NotificationService                from "@/services/notification.service";
-import {mapGetters} from "vuex";
+import ApiService          from "@/services/api.service";
+import * as JwtService     from "@/services/jwt.service";
+import NotificationService from "@/services/notification.service";
+import {mapGetters}        from "vuex";
+import store               from "../../../store";
 
 export default {
   name    : "Navbar",
+  data    : () => ({}),
   computed: {
     ...mapGetters(["totalCarts"])
   },
   methods : {
+    toggleDD(myDropMenu) {
+      document.getElementById(myDropMenu).classList.toggle("invisible");
+    },
     logout() {
       const token = JwtService.getToken();
       if (typeof token != "undefined") {
         ApiService.post('/user/logout').then(res => {
           JwtService.destroyToken();
+          this.$store.commit("GETUSER", {});
           NotificationService.success(res.data.message);
           this.$router.push({name: "userLogin"});
         }).catch(error => {
@@ -96,6 +121,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+#myDropdown {
+  a {
+    width: 140px;
+  }
+}
 </style>

@@ -1,13 +1,13 @@
 export default {
-    state: () => ({
-        user: {},
+    state    : () => ({
+        user       : {},
     }),
-    getters: {
+    getters  : {
         getUserFromGetters(state) {
             return state.user
         },
     },
-    actions: {
+    actions  : {
         /*getUser(context) {
           ApiService.get('/admin/user').then(response => {
             context.commit("GETUSER", response.data.data);
