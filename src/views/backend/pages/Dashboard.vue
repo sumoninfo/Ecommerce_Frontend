@@ -61,6 +61,7 @@
 <script>
 import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
+import * as JwtService     from "@/services/jwt.service";
 
 export default {
   name: "AdminDashboard",
@@ -79,6 +80,10 @@ export default {
       ApiService.get(`/admin/dashboard`).then((res) => {
         this.count = res.data;
       }).catch(error => {
+        if (error.response.status == "403") {
+          JwtService.destroyToken();
+          this.$router.push({name: "userLogin"});
+        }
         NotificationService.error(error.response.data.message);
       })
     },
