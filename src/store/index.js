@@ -1,10 +1,11 @@
-import Vue  from 'vue'
-import Vuex from 'vuex'
+import Vue                 from 'vue'
+import Vuex                from 'vuex'
 
 Vue.use(Vuex)
-import auth from "./modules/auth";
+import auth                from "./modules/auth";
 // import cart from "./modules/cart/index";
 import NotificationService from "@/services/notification.service";
+
 let carts = window.localStorage.getItem('carts');
 
 
@@ -60,8 +61,9 @@ export default new Vuex.Store({
             this.commit('SAVE_CART');
             NotificationService.success('Removed cart');
         },
-        removeAllCarts(state) {
+        removeAllCarts(state, items) {
             window.localStorage.removeItem('carts');
+            this.state.carts = []
             this.commit('SAVE_CART');
         },
     },

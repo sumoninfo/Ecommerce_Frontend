@@ -15,7 +15,7 @@
         <div v-for="(cart, index) in carts" :key="index" class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
           <div class="flex w-2/5"> <!-- product -->
             <div class="w-20">
-              <img class="h-24" src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z" alt="">
+              <img class="h-24" :src="cart.image" :alt="cart.name">
             </div>
             <div class="flex flex-col justify-between ml-4 flex-grow">
               <span class="font-bold text-sm">{{ cart.name }}</span>
@@ -60,19 +60,21 @@
         </select>
       </div>
       <div class="py-2">
-        <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Discount</label>
-        <input v-model="form.discount" type="text" id="promo" placeholder="Discount" class="p-2 text-sm w-full">
+        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Order Note</label>
+        <textarea rows="3" placeholder="Order note" id="note" v-model="form.note" type="text"
+                  class="p-2 text-sm w-full"></textarea>
       </div>
       <div class="py-2">
-        <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Order Note</label>
-        <textarea v-model="form.note" type="text" class="p-2 text-sm w-full"></textarea>
+        <label for="shipping_address" class="font-semibold inline-block mb-3 text-sm uppercase">Shipping Address</label>
+        <textarea rows="5" placeholder="Shipping address" id="shipping_address" v-model="form.shipping_address"
+                  type="text"
+                  class="p-2 text-sm w-full"></textarea>
       </div>
       <div class="border-t">
         <div class="flex font-semibold justify-between py-6 text-sm uppercase">
           <span>Grand Total</span>
           <span>{{ getGrandTotal |numberFormat }}</span>
         </div>
-
         <button v-if="user_logged" @click="orderSubmit()" type="button"
                 class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
           Checkout & Place an order
@@ -97,9 +99,9 @@ export default {
   name    : "Cart",
   data    : () => ({
         form       : {
-          shipping_cost: 60,
-          discount     : 0,
-          note         : '',
+          shipping_cost   : 60,
+          note            : '',
+          shipping_address: '',
         },
         user_logged: false,
       }
@@ -108,7 +110,7 @@ export default {
     ...mapState(["carts"]),
     ...mapGetters(["totalPrice", "totalCarts"]),
     getGrandTotal() {
-      return this.totalPrice + (this.form.shipping_cost - this.form.discount);
+      return parseFloat(this.totalPrice) + parseFloat(this.form.shipping_cost);
     }
   },
   mounted() {
@@ -131,7 +133,7 @@ export default {
     },
     orderSubmit() {
       Swal.fire({
-        title             : 'Are you sure?',
+        title             : 'Are you sure confirm your order?',
         text              : "Do you want to confirm your order?",
         icon              : 'warning',
         showCancelButton  : true,
@@ -142,15 +144,11 @@ export default {
         if (result.isConfirmed) {
           let form = {
             ...this.form,
-            sub_total  : this.totalPrice,
-            carts      : this.carts,
-            grand_total: this.getGrandTotal,
+            carts: this.carts,
           }
           ApiService.post(`/user/orders`, form).then(res => {
             this.$router.push({name: "userDashboard"});
-            // this.$store.dispatch('remo')
-            this.$store.commit('removeAllCarts')
-            // window.localStorage.removeItem('carts');
+            this.$store.commit('removeAllCarts', {})
             NotificationService.success(res.data.message);
           }).catch(error => {
             NotificationService.error(error.response.data.message);
