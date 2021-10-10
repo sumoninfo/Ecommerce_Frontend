@@ -40,7 +40,7 @@
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Subtotal</th>
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Shipping Cost</th>
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Grand Total</th>
-              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Status</th>
+              <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Status/History</th>
               <th class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> Action</th>
             </tr>
             </thead>
@@ -62,6 +62,23 @@
                       class="bg-indigo-700 mb-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 rounded">{{
                       order.status
                     }}</span>
+                  <div v-if="order.order_status_history">
+                    <span v-if="order.order_status_history.approved">
+                     Approved: {{ order.order_status_history.approved | dateFormat }}<br>
+                    </span>
+                    <span v-if="order.order_status_history.processing">
+                     Processing: {{ order.order_status_history.processing | dateFormat }}<br>
+                    </span>
+                    <span v-if="order.order_status_history.shipped">
+                     Shipped: {{ order.order_status_history.shipped | dateFormat }}<br>
+                    </span>
+                    <span v-if="order.order_status_history.delivered">
+                     Delivered: {{ order.order_status_history.delivered | dateFormat }}<br>
+                    </span>
+                    <span v-if="order.order_status_history.rejected">
+                     Rejected: {{ order.order_status_history.rejected | dateFormat }}<br>
+                    </span>
+                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <router-link title="Show Order" :to="{ name: 'userOrderShow', params: {id: order.id }}"

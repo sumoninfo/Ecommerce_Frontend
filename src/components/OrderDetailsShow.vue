@@ -37,6 +37,12 @@
               </h6>
               <h6 class="font-bold">Order ID : <span class="text-sm font-medium"> {{ order.order_no }}</span>
               </h6>
+              <h6 class="font-bold">Status :
+                <span
+                    class="bg-indigo-700 mb-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 rounded">{{
+                    order.status
+                  }}</span>
+              </h6>
             </div>
             <div class="w-40">
               <address class="text-sm">
