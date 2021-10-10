@@ -48,7 +48,7 @@
                   <input type="file" @change="onFileChange">
                 </div>
                 <div class="profile-image-preview flex justify-around" v-else>
-                  <img class="form-img" :src="form.image"/>
+                  <img class="form-img w-32" :src="form.image"/>
                   <span @click="removeImage" class=""><i class="fa-pull-right fa fa-times-circle "
                                                          aria-hidden="true"></i></span>
                 </div>

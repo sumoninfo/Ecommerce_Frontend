@@ -8,8 +8,8 @@
         </div>
       </div>
       <form @submit.prevent="getLists()" class="space-y-4 text-gray-700 px-6 py-2 flex-col md:flex-row pb-3">
-        <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0"></div>
         <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+          <div class="w-full px-2 md:w-1/2 relative text-gray-700"></div>
           <div class="w-full px-2 md:w-1/2 relative text-gray-700">
             <input placeholder="Search..." v-model="form.search" autocomplete="off"
                    class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"

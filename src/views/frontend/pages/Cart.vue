@@ -20,7 +20,7 @@
             <div class="flex flex-col justify-between ml-4 flex-grow">
               <span class="font-bold text-sm">{{ cart.name }}</span>
               <a href="javascript:void(0)" @click="removedCart(cart)"
-                 class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                 class="font-semibold hover:text-red-500 text-gray-500 text-xs"><span class="bg-orange-500 p-2 text-white"><i class="fa fa-trash-o"> Remove</i></span></a>
             </div>
           </div>
           <div class="flex justify-center w-1/5">

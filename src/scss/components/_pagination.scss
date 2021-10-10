@@ -1,6 +1,6 @@
 
-.pagination{
-  li{
+.pagination {
+  li:not(.cursor-not-allowed) {
     cursor: pointer;
     display: block;
   }

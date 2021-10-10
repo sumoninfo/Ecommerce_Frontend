@@ -55,7 +55,7 @@
         </div>
       </template>
       <template v-if="!products.length">
-        <div class="text-center font-bold w-full pt-5 border-t h-20">No Product found</div>
+        <div class="text-center font-bold w-full pt-5 h-20">No Product found</div>
       </template>
     </div>
     <pagination v-if="products.length>0" :pagination="pagination" @paginate="getProducts()" :offset="5"/>
