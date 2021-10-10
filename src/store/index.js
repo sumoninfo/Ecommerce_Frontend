@@ -4,6 +4,7 @@ import Vuex                from 'vuex'
 Vue.use(Vuex)
 import auth                from "./modules/auth";
 // import cart from "./modules/cart/index";
+import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
 
 let carts = window.localStorage.getItem('carts');
@@ -26,31 +27,59 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        addToCart(state, item) {
+        async addToCart(state, item) {
             let found = state.carts.find(product => product.product_id == item.product_id);
             if (found) {
-                found.quantity++;
-                found.sub_total = found.price * found.quantity;
-                NotificationService.success('Updated to cart');
+                let stock_quantity = false
+                await ApiService.get(`/check-product-stock/${found.product_id}`).then((res) => {
+                    stock_quantity = res.data;
+                }).catch(error => {
+                    NotificationService.error(error.response.data.message);
+                })
+                if (stock_quantity > found.quantity) {
+                    found.quantity++;
+                    found.sub_total = found.price * found.quantity;
+                    NotificationService.success('Updated to cart');
+                } else {
+                    NotificationService.error('Product Quantity Exceed Availability!');
+                }
             } else {
                 state.carts.push(item);
                 NotificationService.success('Added to cart');
             }
             this.commit('SAVE_CART');
         },
-        updateToCart(state, updated_cart) {
+        async updateToCart(state, updated_cart) {
             let found = state.carts.find(product => product.product_id == updated_cart.product_id);
             if (updated_cart.quantity > 0) {
-                found.quantity  = updated_cart.quantity;
-                found.sub_total = found.price * updated_cart.quantity;
-                this.commit('SAVE_CART');
-                NotificationService.success('Updated cart');
+                let stock_quantity = false
+                await ApiService.get(`/check-product-stock/${found.product_id}`).then((res) => {
+                    stock_quantity = res.data;
+                }).catch(error => {
+                    NotificationService.error(error.response.data.message);
+                })
+                if (stock_quantity >= updated_cart.quantity) {
+                    found.quantity  = updated_cart.quantity;
+                    found.sub_total = found.price * updated_cart.quantity;
+                    this.commit('SAVE_CART');
+                    NotificationService.success('Updated cart');
+                } else {
+                    NotificationService.error('Product Quantity Exceed Availability!');
+                }
             } else {
                 this.commit('removeFromCart', found);
                 NotificationService.success('Removed cart');
             }
         },
-
+        checkProductStockQty(product_id) {
+            let stock = false
+            ApiService.get(`/check-product-stock/${product_id}`).then((res) => {
+                stock = res.data;
+            }).catch(error => {
+                NotificationService.error(error.response.data.message);
+            })
+            return stock;
+        },
         SAVE_CART(state) {
             window.localStorage.setItem('carts', JSON.stringify(state.carts));
         },

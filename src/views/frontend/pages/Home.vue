@@ -36,17 +36,19 @@
       <template v-if="products.length">
         <div v-for="(product, index) in products" :key="index" class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
           <a href="javascript:void(0)">
-            <!--          <div class="flex-shrink-0 w-1/2">
-                        <img class="w-100 h-100 border" :src="product.image" :alt="product.name">
-                      </div>-->
             <img class="hover:grow hover:shadow-lg" style="height: 272px; width: 272px" :src="product.image"
                  :alt="product.name">
             <div class="pt-3 flex items-center justify-between">
               <p class="">{{ product.name }}</p>
-              <span @click="addToCart(product)" title="Add to cart"
+
+              <span v-if="product.quantity>0" @click="addToCart(product)" title="Add to cart"
                     class="h-6 w-6 fill-current text-gray-500 hover:text-black">
-             <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fa-shopping-cart"></i>
             </span>
+              <span v-else
+                    class="bg-orange-500 px-2 py-1 text-lg font-bold leading-none text-indigo-100 rounded">
+                Out of stock
+              </span>
             </div>
             <p class="pt-1 text-gray-900">{{ product.price | numberFormat }}</p>
           </a>
@@ -85,12 +87,12 @@ export default {
   methods: {
     addToCart(product) {
       let cart = {
-        product_id: product.id,
-        name      : product.name,
-        image     : product.image,
-        quantity  : 1,
-        price     : product.price,
-        sub_total : product.price * 1,
+        product_id    : product.id,
+        name          : product.name,
+        image         : product.image,
+        quantity      : 1,
+        price         : product.price,
+        sub_total     : product.price * 1,
       }
       this.$store.commit('addToCart', cart)
     },
