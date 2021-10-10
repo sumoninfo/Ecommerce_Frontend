@@ -30,7 +30,7 @@
 
 <script>
 import profile from './Profile'
-import orders  from './Orders'
+import orders  from './order/Index'
 
 export default {
   name      : "userDashboard",

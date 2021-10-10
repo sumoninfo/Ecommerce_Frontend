@@ -93,7 +93,7 @@
 import {mapGetters, mapState} from "vuex";
 import ApiService             from "@/services/api.service";
 import NotificationService    from "@/services/notification.service";
-import * as JwtService        from "../../../services/jwt.service";
+import * as JwtService        from "@/services//jwt.service";
 
 export default {
   name    : "Cart",

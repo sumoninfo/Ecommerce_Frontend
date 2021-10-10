@@ -58,9 +58,20 @@
                   {{ order.grand_total | numberFormat }}
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  <span class="bg-indigo-700 mb-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 rounded">{{ order.status }}</span>
+                  <span
+                      class="bg-indigo-700 mb-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 rounded">{{
+                      order.status
+                    }}</span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <router-link title="Show Order" :to="{ name: 'userOrderShow', params: {id: order.id }}"
+                               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-1">
+                    <i class="fas fa-eye"></i>
+                  </router-link>
+                  <a href="#" v-if="order.status == 'Pending'" title="Edit Order" @click="edit(order.id)"
+                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-1">
+                    <i class="fas fa-pencil-alt"></i>
+                  </a>
                   <button v-if="order.status == 'Pending'" title="Delete" @click="destroy(order.id)" type="button"
                           class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-trash-alt"></i>
@@ -129,6 +140,9 @@ export default {
         NotificationService.error(error.response.data.message);
       })
     },
+    edit(id) {
+      NotificationService.success('Order Edit working on');
+    },
     destroy(id) {
       Swal.fire({
         title             : 'Are you sure?',
@@ -140,7 +154,7 @@ export default {
         confirmButtonText : 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          ApiService.delete(`/admin/orders/${id}`,).then(res => {
+          ApiService.delete(`/user/orders/${id}`,).then(res => {
             this.getLists();
             NotificationService.success(res.data.message);
           }).catch(error => {

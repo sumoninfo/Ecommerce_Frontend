@@ -14,7 +14,7 @@ const FrontendRoutes = [
         meta     : {
             title: 'About'
         }
-    },  {
+    }, {
         path     : '/cart',
         name     : 'cartPage',
         component: () => import('./pages/Cart'),
@@ -54,6 +54,15 @@ const FrontendRoutes = [
         component: () => import('./user/Dashboard'),
         meta     : {
             title      : 'Dashboard',
+            requireAuth: true,
+        }
+    },
+    {
+        path     : '/order/:id',
+        name     : 'userOrderShow',
+        component: () => import('./user/order/Show'),
+        meta     : {
+            title      : 'User Order Show',
             requireAuth: true,
         }
     },
