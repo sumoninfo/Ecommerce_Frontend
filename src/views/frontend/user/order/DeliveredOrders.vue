@@ -3,20 +3,10 @@
     <div class="order-nav ">
       <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl pb-3"
          href="#">
-        Orders
+        Delivered Orders
       </a>
       <form @submit.prevent="getLists()" class="border-t space-y-4 text-gray-700 p-5  flex-col md:flex-row pb-3">
         <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
-          <select v-model="form.status" @change="getLists()"
-                  class="w-full px-2 md:w-1/2 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
-            <option value="">Sort By Status</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Processing">Processing</option>
-            <option value="Shipped">Shipped</option>
-            <option value="Delivered">Delivered</option>
-            <option value="Rejected">Rejected</option>
-          </select>
           <div class="w-full px-2 md:w-1/2 relative text-gray-700">
             <input placeholder="Search..." v-model="form.search" autocomplete="off"
                    class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
@@ -81,18 +71,10 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  <router-link title="Show Order" :to="{ name: 'userOrderShow', params: {id: order.id }}"
+                  <router-link title="Show Order" :to="{ name: 'userOrderShow', params: {id: order.id }, query:{'type':'delivered'}}"
                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-3 rounded mr-1">
                     <i class="fas fa-eye"></i>
                   </router-link>
-                  <a href="#" v-if="order.status == 'Pending'" title="Edit Order" @click="edit(order.id)"
-                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-1">
-                    <i class="fas fa-pencil-alt"></i>
-                  </a>
-                  <button v-if="order.status == 'Pending'" title="Delete" @click="destroy(order.id)" type="button"
-                          class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-3 rounded">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
                 </td>
               </tr>
             </template>
@@ -116,7 +98,7 @@ import NotificationService from "@/services/notification.service";
 import Pagination          from "@/components/Pagination";
 
 export default {
-  name      : "CustomerOrders",
+  name      : "DeliveredOrders",
   components: {Pagination},
   data      : () => ({
     pagination: {
@@ -124,8 +106,7 @@ export default {
     },
     form      : {
       per_page: 15,
-      search  : '',
-      status  : '',
+      search  : ''
     },
     orders    : [],
   }),
@@ -139,7 +120,7 @@ export default {
         ...this.form,
         page: this.pagination.current_page
       }
-      ApiService.get(`/user/orders`, {params: params}).then((res) => {
+      ApiService.get(`/user/delivered-orders`, {params: params}).then((res) => {
         this.orders     = res.data.data;
         this.pagination = res.data.meta;
         this.$Progress.finish();
@@ -147,32 +128,7 @@ export default {
         this.$Progress.fail();
         NotificationService.error(error.response.data.message);
       })
-    },
-    edit(id) {
-      NotificationService.success('Order Edit working on');
-    },
-    destroy(id) {
-      Swal.fire({
-        title             : 'Are you sure?',
-        text              : "You won't be able to revert this!",
-        icon              : 'warning',
-        showCancelButton  : true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor : '#d33',
-        confirmButtonText : 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          ApiService.delete(`/user/orders/${id}`,).then(res => {
-            this.getLists();
-            NotificationService.success(res.data.message);
-          }).catch(error => {
-            NotificationService.error(error.response.data.message);
-          })
-        }
-      }).catch(error => {
-        NotificationService.error(error.response.data.message);
-      })
-    },
+    }
   }
 }
 </script>

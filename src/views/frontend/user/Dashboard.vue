@@ -12,6 +12,10 @@
            v-bind:class="[dashboard_component =='orders' ? 'bg-gray-200' : '']"
            class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
            href="#">Orders</a>
+        <a @click="dashboard_component='delivered_orders'"
+           v-bind:class="[dashboard_component =='delivered_orders' ? 'bg-gray-200' : '']"
+           class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+           href="#">Delivered Orders</a>
         <a @click="dashboard_component='profile'"
            v-bind:class="[dashboard_component =='profile' ? 'bg-gray-200' : '']"
            class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900  rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -29,13 +33,14 @@
 </template>
 
 <script>
-import profile         from './Profile'
-import orders          from './order/Index'
-import password_update from './PasswordUpdate'
+import profile          from './Profile'
+import orders           from './order/Index'
+import delivered_orders from './order/DeliveredOrders'
+import password_update  from './PasswordUpdate'
 
 export default {
   name      : "userDashboard",
-  components: {profile, orders, password_update},
+  components: {profile, orders, password_update, delivered_orders},
   data      : () => ({
     dashboard_component: 'orders'
   }),

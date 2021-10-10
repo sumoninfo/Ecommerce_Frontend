@@ -39,6 +39,13 @@ const BackendRoutes = [
             title: 'Orders List'
         }
     }, {
+        path     : 'delivered-orders',
+        name     : 'adminDeliveredOrders',
+        component: () => import('../backend/pages/order/DeliveredOrders'),
+        meta     : {
+            title: 'Delivered Orders'
+        }
+    }, {
         path     : 'orders/:id',
         name     : 'adminOrderShow',
         component: () => import('../backend/pages/order/Show'),

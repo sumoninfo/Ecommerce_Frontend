@@ -33,7 +33,10 @@ export default {
   },
   methods: {
     getOrder(id) {
-      ApiService.get(`/admin/orders/${id}`).then((res) => {
+      let params = {
+        type: this.$route.query.type
+      }
+      ApiService.get(`/admin/orders/${id}`, {params: params}).then((res) => {
         this.order = res.data.data;
       }).catch(error => {
         NotificationService.error(error.response.data.message);
