@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import moment from 'moment'
 //numberFormat
 Vue.filter("numberFormat", function (number) {
     return process.env.VUE_APP_CURRENCY + ' ' + parseFloat(number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');

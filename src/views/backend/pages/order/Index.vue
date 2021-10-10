@@ -80,6 +80,10 @@
                   </select>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <router-link title="Show Order" :to="{ name: 'adminOrderShow', params: {id: order.id }}"
+                               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-1">
+                    <i class="fas fa-eye"></i>
+                  </router-link>
                   <button v-if="order.status == 'Pending'" title="Delete" @click="destroy(order.id)" type="button"
                           class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-trash-alt"></i>
