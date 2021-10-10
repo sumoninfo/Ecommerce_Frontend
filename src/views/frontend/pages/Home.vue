@@ -94,7 +94,7 @@ export default {
         price         : product.price,
         sub_total     : product.price * 1,
       }
-      this.$store.commit('addToCart', cart)
+      this.$store.commit('ADD_TO_CART', cart)
     },
     getProducts() {
       this.$Progress.start();
@@ -107,9 +107,9 @@ export default {
       ApiService.get(`/products`, {params: params}).then((res) => {
         this.products   = res.data.data;
         this.pagination = res.data.meta;
-        ///this.$Progress.finish();
+        this.$Progress.finish();
       }).catch(error => {
-        //this.$Progress.fail();
+        this.$Progress.fail();
         NotificationService.error(error.response.data.message);
       })
     }

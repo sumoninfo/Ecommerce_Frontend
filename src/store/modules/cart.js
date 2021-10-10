@@ -1,14 +1,9 @@
-import Vue                 from 'vue'
-import Vuex                from 'vuex'
-
-Vue.use(Vuex)
-import auth                from "./modules/auth";
 import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
 
 let carts = window.localStorage.getItem('carts');
 
-export default new Vuex.Store({
+export default {
     state    : {
         carts: carts ? JSON.parse(carts) : [],
     },
@@ -94,9 +89,4 @@ export default new Vuex.Store({
             this.commit('SAVE_CART');
         },
     },
-
-
-    modules: {
-        auth,
-    }
-})
+}

@@ -124,14 +124,14 @@ export default {
       this.$router.push({name: 'userLogin'})
     },
     removedCart(item) {
-      this.$store.commit('removeFromCart', item)
+      this.$store.commit('REMOVE_FROM_CART', item)
     },
     updateToCart(product_id, $event) {
       let updated_cart = {
         product_id,
         quantity: $event.target.value
       }
-      this.$store.commit('updateToCart', updated_cart)
+      this.$store.commit('UPDATE_TO_CART', updated_cart)
     },
     orderSubmit() {
       Swal.fire({
@@ -150,7 +150,7 @@ export default {
           }
           ApiService.post(`/user/orders`, form).then(res => {
             this.$router.push({name: "userDashboard"});
-            this.$store.commit('removeAllCarts', {})
+            this.$store.commit('REMOVE_ALL_CARTS', {})
             NotificationService.success(res.data.message);
           }).catch(error => {
             NotificationService.error(error.response.data.message);
