@@ -33,10 +33,10 @@
             </div>
             <div class="flex flex-wrap -mx-3 mb-2">
               <div class="w-full md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="qty">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="quantity">
                   Qty
                 </label>
-                <input v-model="form.qty" id="qty" type="number" placeholder="Qty"
+                <input v-model="form.quantity" id="quantity" type="number" placeholder="Qty"
                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
               </div>
 
@@ -87,7 +87,7 @@ export default {
     form    : {
       name       : '',
       price      : '',
-      qty        : '',
+      quantity        : '',
       description: '',
       image      : '',
     }
@@ -155,7 +155,7 @@ export default {
       this.form     = {
         name       : '',
         price      : '',
-        qty        : '',
+        quantity        : '',
         description: '',
         image      : '',
       };
