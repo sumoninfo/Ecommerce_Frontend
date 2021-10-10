@@ -1,8 +1,9 @@
 <template>
   <div class="main-content w-full flex-1 bg-gray-100 mt-12 md:mt-15 pb-24 md:pb-5">
-    <div class="product-nav">
+    <div class="product_nav">
       <div class="bg-gray-800 pt-3">
-        <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
+        <div
+            class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
           <h3 class="font-bold pl-2 text-2xl">Products</h3>
           <router-link :to="{name:'adminProductCreate'}"
                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
@@ -25,7 +26,7 @@
       </div>
     </div>
     <div class="p-5 md:flex-row">
-      <div class="py-2 -my-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 w-full">
+      <div class="py-2  w-full">
         <div
             class="inline-block min-w-full border-b border-gray-200 shadow sm:rounded-lg">
           <table class="min-w-full text-left">
@@ -34,10 +35,11 @@
               <th
                   class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                 #
-              </th>  <th
-                class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              Name
-            </th>
+              </th>
+              <th
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                Name
+              </th>
               <th
                   class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                 Qty
@@ -62,8 +64,8 @@
               <tr v-for="(product, index) in products">
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">{{ ++index }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.name }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.qty ? product.qty : '-' }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.price ? product.price+' $' : '-' }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.quantity }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.price | numberFormat }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <div class="flex-shrink-0">
                     <img class="rounded w-2/12" :src="product.image"

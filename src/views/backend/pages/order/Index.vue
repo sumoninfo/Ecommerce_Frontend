@@ -32,7 +32,7 @@
       </form>
     </div>
     <div class="p-5 md:flex-row">
-      <div class="py-2 -my-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 w-full">
+      <div class="py-2 w-full">
         <div
             class="inline-block min-w-full border-b border-gray-200 shadow sm:rounded-lg">
           <table class="min-w-full text-left">
@@ -50,22 +50,22 @@
             <tbody class="bg-white">
             <template v-if="orders.length">
               <tr v-for="(order, index) in orders">
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">{{ order.order_no }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200 ">{{ order.order_no }}</td>
+                <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200">
                   Name: {{ order.user.name }}<br>
                   Email: {{ order.user.email }}<br>
                   Phone: {{ order.user.phone }}
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200">
                   {{ order.sub_total | numberFormat }}
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200">
                   {{ order.shipping_cost | numberFormat }}
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200">
                   {{ order.grand_total | numberFormat }}
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200">
                   <span
                       class="bg-indigo-700 mb-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 rounded">{{
                       order.status
@@ -98,13 +98,13 @@
                     </span>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200">
                   <router-link title="Show Order" :to="{ name: 'adminOrderShow', params: {id: order.id }}"
-                               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-1">
+                               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-3 rounded mr-1">
                     <i class="fas fa-eye"></i>
                   </router-link>
                   <button v-if="order.status == 'Pending'" title="Delete" @click="destroy(order.id)" type="button"
-                          class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+                          class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-3 rounded">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
