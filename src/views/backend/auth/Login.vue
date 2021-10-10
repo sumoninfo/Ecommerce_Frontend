@@ -23,7 +23,7 @@
             </label>
             <input v-model="form.password"
                    class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-                   id="password" type="password" placeholder="******************">
+                   id="password" type="password" placeholder="********">
             <p class="text-red text-xs italic hidden">Please choose a password.</p>
           </div>
           <div class="flex items-center justify-between">

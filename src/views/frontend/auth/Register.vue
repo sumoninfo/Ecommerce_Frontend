@@ -32,7 +32,7 @@
             </label>
             <input required v-model="form.password"
                    class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-                   id="password" type="password" placeholder="******************">
+                   id="password" type="password" placeholder="********">
 
           </div>
           <div class="mb-6">
@@ -41,7 +41,7 @@
             </label>
             <input required v-model="form.password_confirmation"
                    class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-                   id="confirm-password" type="password" placeholder="******************">
+                   id="confirm-password" type="password" placeholder="********">
           </div>
           <div>
             <button type="submit"
