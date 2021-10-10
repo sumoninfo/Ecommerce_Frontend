@@ -3,15 +3,15 @@
     <div class="flex items-center flex-wrap">
       <nav id="store" class="w-full z-30 top-0 px-6 py-1">
 
-        <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 pt-3">
-          <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
+        <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 pt-3 pb-3 border-b">
+          <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl"
              href="#">
             Products List
           </a>
           <div class="flex items-center" id="store-nav-content">
-            <a class="pl-3 inline-block no-underline hover:text-black" href="#">
+            <a class="pl-3 inline-block no-underline hover:text-black mr-1" href="#">
               <select v-model="form.sort_by" @change="getProducts()"
-                      class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                      class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
                 <option value="">Sort By</option>
                 <option value="ASC">Price low to high</option>
                 <option value="DESC">Price high to low</option>
@@ -34,7 +34,7 @@
         </div>
       </nav>
       <template v-if="products.length">
-        <div v-for="(product, index) in products" :key="index" class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
+        <div v-for="(product, index) in products" :key="index" class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col shadow-lg">
           <a href="javascript:void(0)">
             <img class="hover:grow hover:shadow-lg" style="height: 272px; width: 272px" :src="product.image"
                  :alt="product.name">

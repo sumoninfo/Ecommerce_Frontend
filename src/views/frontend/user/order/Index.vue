@@ -1,11 +1,11 @@
 <template>
-  <div class="pt-3">
-    <div class="order-nav">
+  <div class="pt-3 px-3">
+    <div class="order-nav ">
       <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl pb-3"
          href="#">
         Orders
       </a>
-      <form @submit.prevent="getLists()" class="space-y-4 text-gray-700 p-5  flex-col md:flex-row pb-3">
+      <form @submit.prevent="getLists()" class="border-t space-y-4 text-gray-700 p-5  flex-col md:flex-row pb-3">
         <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
           <select v-model="form.status" @change="getLists()"
                   class="w-full px-2 md:w-1/2 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">

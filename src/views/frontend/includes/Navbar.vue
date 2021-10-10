@@ -42,22 +42,26 @@
 
       <div class="order-2 md:order-3 flex items-center" id="nav-content">
         <div v-if="$store.state.auth.user.id" class="relative inline-block">
-          <button @click="toggleDD('myDropdown')" class="drop-button focus:outline-none text-black"><span
-              class="pr-2"><i class="em em-robot_face"></i></span> Hi, {{ $root.user.name }}
-            <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-            </svg>
-          </button>
-          <div id="myDropdown"
-               class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30 invisible">
-            <router-link :to="{name:'userDashboard'}"
-                         class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
-                class="fa fa-user fa-fw"></i> Dashboard
-            </router-link>
-            <div class="border border-gray-800"></div>
-            <a href="#" @click="logout()"
-               class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
-                class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+          <div class="dropdown inline-block relative">
+            <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+              <span class="mr-1">Hi, {{ $root.user.name }}</span>
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+              </svg>
+            </button>
+            <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 z-50">
+              <li class="">
+                <router-link :to="{name:'userDashboard'}"
+                             class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"><i
+                    class="fa fa-dashboard fa-fw"></i> Dashboard
+                </router-link>
+              </li>
+              <li class="">
+                <a href="#" @click="logout()"
+                   class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"><i
+                    class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+              </li>
+            </ul>
           </div>
         </div>
         <router-link v-else class="inline-block no-underline hover:text-black" :to="{name:'userLogin'}">
@@ -122,6 +126,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
 #myDropdown {
   a {
     width: 140px;
