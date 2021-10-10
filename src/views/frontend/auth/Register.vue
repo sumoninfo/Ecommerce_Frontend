@@ -78,7 +78,7 @@ export default {
   methods: {
     register() {
       ApiService.post('/register', this.form).then((res) => {
-        NotificationService.success(res.data.message);
+        NotificationService.success(`${res.data.message}. Please login`);
         this.$router.push({name: "userLogin"});
       }).catch(errors => {
         NotificationService.error(errors.response.data.message);

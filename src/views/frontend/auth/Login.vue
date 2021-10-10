@@ -58,8 +58,6 @@
     </div>
   </div>
 </template>
-
-
 <script>
 import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
@@ -82,7 +80,12 @@ export default {
         localStorage.setItem("expires_at", res.data.expires_at);
         ApiService.init();
         NotificationService.success(res.data.message);
-        this.$router.push({name: "userDashboard"});
+        if (localStorage.getItem('redirect_to_cart') == 'yes') {
+          localStorage.removeItem('redirect_to_cart')
+          this.$router.push({name: "cartPage"});
+        } else {
+          this.$router.push({name: "userDashboard"});
+        }
       }).catch(errors => {
         NotificationService.error(errors.response.data.message);
       });

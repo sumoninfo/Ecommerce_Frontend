@@ -45,7 +45,6 @@
         Continue Shopping
       </router-link>
     </div>
-
     <div id="summary" class="w-1/4 px-8 py-10">
       <h1 class="font-semibold text-2xl border-b pb-2">Order Summary</h1>
       <div class="flex justify-between mt-2 mb-5">
@@ -79,13 +78,12 @@
                 class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
           Checkout & Place an order
         </button>
-        <button @click="$router.push({name:'userLogin'})" v-else type="button"
+        <button @click="loginFirst()" v-else type="button"
                 class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
           login first
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -121,6 +119,10 @@ export default {
     this.user_logged = JwtService.getLoggedUser() == 'user' ? true : false;
   },
   methods: {
+    loginFirst() {
+      localStorage.setItem('redirect_to_cart', 'yes');
+      this.$router.push({name: 'userLogin'})
+    },
     removedCart(item) {
       this.$store.commit('removeFromCart', item)
     },
