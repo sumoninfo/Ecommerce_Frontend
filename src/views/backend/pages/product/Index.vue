@@ -1,7 +1,7 @@
 <template>
   <div class="main-content w-full flex-1 bg-gray-100 mt-12 md:mt-15 pb-24 md:pb-5">
-    <div class="product_nav">
-      <div class="bg-gray-800 pt-3">
+    <div class="nav ">
+      <div class="bg-gray-800 pt-3 ">
         <div
             class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
           <h3 class="font-bold pl-2 text-2xl">Products</h3>
@@ -11,22 +11,23 @@
           </router-link>
         </div>
       </div>
-      <div class="search-div flex p-5  flex-col md:flex-row pb-3">
-        <form @submit.prevent="getLists()" class="w-full float-right max-w-sm">
-          <div class="flex items-center border-b border-teal-500 py-2">
-            <input type="text" placeholder="Search..." v-model="form.search" autocomplete="off"
-                   class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-            <button
-                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                type="submit">
+      <form @submit.prevent="getLists()" class="space-y-4 text-gray-700 px-6 py-2 flex-col md:flex-row pb-3">
+        <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+          <div class="w-full px-2 md:w-1/2 relative text-gray-700"></div>
+          <div class="w-full px-2 md:w-1/2 relative text-gray-700">
+            <input placeholder="Search..." v-model="form.search" autocomplete="off"
+                   class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+                   type="text"/>
+            <button type="submit"
+                    class="absolute bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 inset-y-0 right-0 flex items-center px-4 font-bold text-white rounded-r-lg">
               Search
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
-    <div class="p-5 md:flex-row">
-      <div class="py-2  w-full">
+    <div class="px-5 md:flex-row">
+      <div class="py-2 w-full">
         <div
             class="inline-block min-w-full border-b border-gray-200 shadow sm:rounded-lg">
           <table class="min-w-full text-left">
@@ -65,7 +66,10 @@
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">{{ ++index }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.name }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.quantity }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.price | numberFormat }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{
+                    product.price | numberFormat
+                  }}
+                </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <div class="flex-shrink-0">
                     <img class="rounded w-2/12" :src="product.image"
@@ -124,10 +128,9 @@ export default {
     getLists() {
       this.$Progress.start();
       let params = {
-        per_page: this.form.per_page,
-        page    : this.pagination.current_page,
-        search  : this.form.search,
-      };
+        ...this.form,
+        page: this.pagination.current_page
+      }
       ApiService.get(`/admin/products`, {params: params}).then((res) => {
         this.products   = res.data.data;
         this.pagination = res.data.meta;

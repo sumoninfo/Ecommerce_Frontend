@@ -1,86 +1,91 @@
 <template>
-  <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-15 pb-24 md:pb-5">
-    <div class="bg-gray-800 pt-3">
-      <div class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
-        <h3 class="font-bold pl-2 text-2xl">Customers</h3>
+  <div class="main-content w-full flex-1 bg-gray-100 mt-12 md:mt-15 pb-24 md:pb-5">
+    <div class="nav ">
+      <div class="bg-gray-800 pt-3 ">
+        <div
+            class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
+          <h3 class="font-bold pl-2 text-2xl">Customers</h3>
+        </div>
       </div>
-    </div>
-    <div class="p-5">
-      <div class="flex flex-col md:flex-row">
-        <form @submit.prevent="getLists()" class="w-full float-right max-w-sm">
-          <div class="flex items-center border-b border-teal-500 py-2">
-            <input type="text" placeholder="Search..." v-model="form.search" autocomplete="off"
-                   class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-            <button
-                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                type="submit">
+      <form @submit.prevent="getLists()" class="space-y-4 text-gray-700 px-6 py-2 flex-col md:flex-row pb-3">
+        <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+          <div class="w-full px-2 md:w-1/2 relative text-gray-700 ">
+          </div>
+          <div class="w-full px-2 md:w-1/2 relative text-gray-700 ">
+            <input placeholder="Search..." v-model="form.search" autocomplete="off"
+                   class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
+                   type="text"/>
+            <button type="submit"
+                    class="absolute bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 inset-y-0 right-0 flex items-center px-4 font-bold text-white rounded-r-lg">
               Search
             </button>
           </div>
-        </form>
-      </div>
-      <div class="md:flex-row">
-        <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-          <div
-              class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-            <table class="min-w-full">
-              <thead>
-              <tr>
-                <th
-                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  #
-                </th> <th
-                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  Name
-                </th>
-                <th
-                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  Email
-                </th>
-                <th
-                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  Phone
-                </th>
-                <th
-                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  Orders
-                </th>
-                <th
-                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  Action
-                </th>
-              </tr>
-              </thead>
+        </div>
+      </form>
+    </div>
+    <div class="px-5 md:flex-row">
+      <div class="py-2 w-full">
+        <div
+            class="inline-block min-w-full border-b border-gray-200 shadow sm:rounded-lg">
+          <table class="min-w-full text-center">
+            <thead>
+            <tr>
+              <th
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                #
+              </th>
+              <th
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                Name
+              </th>
+              <th
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                Email
+              </th>
+              <th
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                Phone
+              </th>
+              <th
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                Total Order
+              </th>
+              <th
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                Action
+              </th>
+            </tr>
+            </thead>
 
-              <tbody class="bg-white">
-              <template v-if="customers.length">
-                <tr v-for="(product, index) in customers">
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ ++index }}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.name }}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.email }}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.email }}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.email }}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <button title="Delete" @click="destroy(product.id)" type="button"
-                            class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </td>
-                </tr>
-              </template>
-              <template v-if="!customers.length">
-                <tr>
-                  <th class="text-center font-weight-bolder h-20" colspan="100%">No data found</th>
-                </tr>
-              </template>
-              </tbody>
-            </table>
-            <pagination v-if="customers.length>0" :pagination="pagination" @paginate="getLists()" :offset="5"/>
-          </div>
+            <tbody class="bg-white">
+            <template v-if="customers.length">
+              <tr v-for="(product, index) in customers">
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ ++index }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.name }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.email }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.email }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.orders_count }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <button title="Delete" @click="destroy(product.id)" type="button"
+                          class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </template>
+            <template v-if="!customers.length">
+              <tr>
+                <th class="text-center font-weight-bolder h-20" colspan="100%">No data found</th>
+              </tr>
+            </template>
+            </tbody>
+          </table>
+          <pagination v-if="customers.length>0" :pagination="pagination" @paginate="getLists()" :offset="5"/>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -99,7 +104,7 @@ export default {
       per_page: 15,
       search  : '',
     },
-    customers  : [],
+    customers : [],
   }),
   mounted() {
     this.getLists();
@@ -108,12 +113,11 @@ export default {
     getLists() {
       this.$Progress.start();
       let params = {
-        per_page: this.form.per_page,
-        page    : this.pagination.current_page,
-        search  : this.form.search,
-      };
+        ...this.form,
+        page: this.pagination.current_page
+      }
       ApiService.get(`/admin/customers`, {params: params}).then((res) => {
-        this.customers   = res.data.data;
+        this.customers  = res.data.data;
         this.pagination = res.data.meta;
         this.$Progress.finish();
       }).catch(error => {

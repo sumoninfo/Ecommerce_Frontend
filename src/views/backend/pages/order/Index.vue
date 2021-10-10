@@ -1,16 +1,16 @@
 <template>
   <div class="main-content w-full flex-1 bg-gray-100 mt-12 md:mt-15 pb-24 md:pb-5">
-    <div class="order-nav">
-      <div class="bg-gray-800 pt-3">
+    <div class="nav ">
+      <div class="bg-gray-800 pt-3 ">
         <div
             class="rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-2 shadow text-white flex justify-between">
           <h3 class="font-bold pl-2 text-2xl">Orders</h3>
         </div>
       </div>
-      <form @submit.prevent="getLists()" class="space-y-4 text-gray-700 p-5  flex-col md:flex-row pb-3">
+      <form @submit.prevent="getLists()" class="space-y-4 text-gray-700 px-6 py-2 flex-col md:flex-row pb-3">
         <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
           <select v-model="form.status" @change="getLists()"
-                  class="w-full px-2 md:w-1/2 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                  class="w-full px-2 md:w-1/2 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
             <option value="">Sort By Status</option>
             <option value="Pending">Pending</option>
             <option value="Approved">Approved</option>
@@ -31,7 +31,7 @@
         </div>
       </form>
     </div>
-    <div class="p-5 md:flex-row">
+    <div class="px-5 md:flex-row">
       <div class="py-2 w-full">
         <div
             class="inline-block min-w-full border-b border-gray-200 shadow sm:rounded-lg">
