@@ -46,27 +46,33 @@
       </router-link>
     </div>
     <div id="summary" class="w-1/4 px-8 py-10">
-      <h1 class="font-semibold text-2xl border-b pb-2">Order Summary</h1>
+      <h1 class="font-semibold text-2xl border-b pb-2">Book Summary</h1>
       <div class="flex justify-between mt-2 mb-5">
         <span class="font-semibold text-sm uppercase">Items: {{ totalCarts }}</span>
         <span class="font-semibold text-sm">Sub Total: {{ totalPrice |numberFormat }}</span>
       </div>
-      <div>
-        <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping Cost</label>
-        <select v-model="form.shipping_cost" class="block p-2 text-gray-600 w-full text-sm">
-          <option value="60">Inside Dhaka - 60.00</option>
-          <option value="100">Outside Dhaka - 100.00</option>
-        </select>
+      <div class="border-t pb-2">
+        <label class=" font-medium inline-block mb-3 text-sm uppercase">Check In</label>
+        <input class="block p-2 text-gray-600 w-full text-sm" type="datetime-local">
+      </div>
+      <div class="border-t pb-2">
+        <label class=" font-medium inline-block mb-3 text-sm uppercase">Check Out</label>
+        <input class="block p-2 text-gray-600 w-full text-sm" type="datetime-local">
       </div>
       <div class="py-2">
-        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Order Note</label>
-        <textarea rows="3" placeholder="Order note" id="note" v-model="form.note" type="text"
+        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Contact Number: </label>
+        <input placeholder="Contact Number" id="note" v-model="form.note" type="text"
+                  class="p-2 text-sm w-full"/>
+      </div>
+      <div class="py-2">
+        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Address: </label>
+        <textarea rows="3" placeholder="Book note" id="note" v-model="form.note" type="text"
                   class="p-2 text-sm w-full"></textarea>
       </div>
+
       <div class="py-2">
-        <label for="shipping_address" class="font-semibold inline-block mb-3 text-sm uppercase">Shipping Address</label>
-        <textarea rows="5" placeholder="Shipping address" id="shipping_address" v-model="form.shipping_address"
-                  type="text"
+        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Book Note</label>
+        <textarea rows="3" placeholder="Book note" id="note" v-model="form.note" type="text"
                   class="p-2 text-sm w-full"></textarea>
       </div>
       <div class="border-t">

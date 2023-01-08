@@ -6,11 +6,11 @@
         <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 pt-3 pb-3 border-b">
           <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl"
              href="#">
-            Products List
+            Rooms and Suites
           </a>
           <div class="flex items-center" id="store-nav-content">
             <a class="pl-3 inline-block no-underline hover:text-black mr-1" href="#">
-              <select v-model="form.sort_by" @change="getProducts()"
+              <select v-model="form.sort_by" @change="getRooms()"
                       class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
                 <option value="">Sort By</option>
                 <option value="ASC">Price low to high</option>
@@ -18,7 +18,7 @@
               </select>
             </a>
             <div class="flex flex-col md:flex-row">
-              <form @submit.prevent="getProducts()" class="w-full float-right max-w-sm">
+              <form @submit.prevent="getRooms()" class="w-full float-right max-w-sm">
                 <div class="flex items-center border border-teal-500">
                   <input type="text" placeholder="Search..." v-model="form.search" autocomplete="off"
                          class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
@@ -33,32 +33,24 @@
           </div>
         </div>
       </nav>
-      <template v-if="products.length">
-        <div v-for="(product, index) in products" :key="index" class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col shadow-lg">
-          <a href="javascript:void(0)">
-            <img class="hover:grow hover:shadow-lg" style="height: 272px; width: 272px" :src="product.image"
-                 :alt="product.name">
-            <div class="pt-3 flex items-center justify-between">
-              <p class="">{{ product.name }}</p>
-
-              <span v-if="product.quantity>0" @click="addToCart(product)" title="Add to cart"
-                    class="h-6 w-6 fill-current text-gray-500 hover:text-black">
-                    <i class="fas fa-shopping-cart"></i>
-            </span>
-              <span v-else
-                    class="bg-orange-500 px-2 py-1 text-lg font-bold leading-none text-indigo-100 rounded">
-                Out of stock
-              </span>
-            </div>
-            <p class="pt-1 text-gray-900">{{ product.price | numberFormat }}</p>
-          </a>
+      <template v-if="rooms.length">
+        <div v-for="(room, index) in rooms" :key="index" class="w-full md:w-1/2 p-6 flex flex-col shadow-lg">
+          <RoomComponent :room="room"/>
+          <button @click="bookingNow(room)"
+                  class="w-11/12 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            Booking Now
+          </button>
+          <button
+              class="w-11/12 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            Out of stock
+          </button>
         </div>
       </template>
-      <template v-if="!products.length">
-        <div class="text-center font-bold w-full pt-5 h-20">No Product found</div>
+      <template v-if="!rooms.length">
+        <div class="text-center font-bold w-full pt-5 h-20">No Room found</div>
       </template>
     </div>
-    <pagination v-if="products.length>0" :pagination="pagination" @paginate="getProducts()" :offset="5"/>
+    <pagination v-if="rooms.length>0" :pagination="pagination" @paginate="getRooms()" :offset="5"/>
   </section>
 </template>
 
@@ -66,10 +58,11 @@
 import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
 import Pagination          from "@/components/Pagination";
+import RoomComponent       from "@/components/RoomComponent.vue";
 
 export default {
   name      : "Home",
-  components: {Pagination},
+  components: {RoomComponent, Pagination},
   data      : () => ({
     pagination: {
       current_page: 1,
@@ -79,24 +72,16 @@ export default {
       search  : '',
       sort_by : '',
     },
-    products  : [],
+    rooms     : [],
   }),
   mounted() {
-    this.getProducts()
+    this.getRooms()
   },
   methods: {
-    addToCart(product) {
-      let cart = {
-        product_id    : product.id,
-        name          : product.name,
-        image         : product.image,
-        quantity      : 1,
-        price         : product.price,
-        sub_total     : product.price * 1,
-      }
-      this.$store.commit('ADD_TO_CART', cart)
+    bookingNow(room) {
+      this.$router.push({'name': 'bookingNow', params: {roomId: room.id}});
     },
-    getProducts() {
+    getRooms() {
       this.$Progress.start();
       let params = {
         per_page: this.form.per_page,
@@ -104,8 +89,8 @@ export default {
         search  : this.form.search,
         sort_by : this.form.sort_by,
       };
-      ApiService.get(`/products`, {params: params}).then((res) => {
-        this.products   = res.data.data;
+      ApiService.get(`/rooms`, {params: params}).then((res) => {
+        this.rooms      = res.data.data;
         this.pagination = res.data.meta;
         this.$Progress.finish();
       }).catch(error => {

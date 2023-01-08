@@ -7,6 +7,57 @@ const BackendRoutes = [
             title: 'Dashboard'
         }
     },
+    //==============Amenities routes=================
+    {
+        path     : 'amenities',
+        name     : 'adminAmenities',
+        component: () => import('../backend/pages/amenity/Index'),
+        meta     : {
+            title: 'Amenities List'
+        }
+    },
+    {
+        path     : 'amenities/create',
+        name     : 'adminAmenityCreate',
+        component: () => import('../backend/pages/amenity/Create'),
+        meta     : {
+            title: 'Amenity Create'
+        }
+    },
+    {
+        path     : 'amenities/edit/:id',
+        name     : 'adminAmenityEdit',
+        component: () => import('../backend/pages/amenity/Create'),
+        meta     : {
+            title: 'Amenity Edit'
+        }
+    },
+    //==============Rooms routes=================
+    {
+        path     : 'rooms',
+        name     : 'adminRooms',
+        component: () => import('../backend/pages/room/Index'),
+        meta     : {
+            title: 'Rooms List'
+        }
+    },
+    {
+        path     : 'rooms/create',
+        name     : 'adminRoomCreate',
+        component: () => import('../backend/pages/room/Create'),
+        meta     : {
+            title: 'Room Create'
+        }
+    },
+    {
+        path     : 'rooms/edit/:id',
+        name     : 'adminRoomEdit',
+        component: () => import('../backend/pages/room/Create'),
+        meta     : {
+            title: 'Room Edit'
+        }
+    },
+    //==============Products routes=================
     {
         path     : 'products',
         name     : 'adminProducts',
