@@ -114,6 +114,7 @@
 import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
 import Pagination          from "@/components/Pagination";
+import * as JwtService     from "@/services/jwt.service";
 
 export default {
   name      : "CustomerOrders",
@@ -146,6 +147,11 @@ export default {
       }).catch(error => {
         this.$Progress.fail();
         NotificationService.error(error.response.data.message);
+        if (error?.response?.status == 403) {
+          JwtService.destroyToken();
+          this.$store.commit("GETUSER", {});
+          this.$router.push({name: "userLogin"});
+        }
       })
     },
     edit(id) {

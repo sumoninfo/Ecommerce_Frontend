@@ -97,10 +97,11 @@ export default {
       ApiService.get(`/admin/dashboard`).then((res) => {
         this.count = res.data;
       }).catch(error => {
-        if (error.response.status == "403") {
-          JwtService.destroyToken();
-          this.$router.push({name: "userLogin"});
-        }
+          if (error?.response?.status == 403) {
+            JwtService.destroyToken();
+            this.$store.commit("GETUSER", {});
+          }
+        this.$router.push({name: "userLogin"});
         NotificationService.error(error.response.data.message);
       })
     },
