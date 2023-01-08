@@ -1,5 +1,11 @@
 # ecommerce-frontend
 
+Copy the example env file and make the required configuration changes in the .env file
+
+```
+cp .env.example .env
+```
+
 ## Project setup
 
 ```
@@ -29,4 +35,3 @@ Password: 12345678
 User: customer@gmail.com
 Password: 12345678
 ```
- 
