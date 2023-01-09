@@ -57,6 +57,39 @@ const BackendRoutes = [
             title: 'Room Edit'
         }
     },
+    //==============Bookings==================
+    {
+        path     : 'bookings',
+        name     : 'adminBookings',
+        component: () => import('../backend/pages/booking/Index'),
+        meta     : {
+            title: 'Bookings List'
+        }
+    }, {
+        path     : 'bookings/:id',
+        name     : 'adminBookingShow',
+        component: () => import('../backend/pages/booking/Show'),
+        meta     : {
+            title: 'Booking Details'
+        }
+    },
+    //==========================
+    {
+        path     : 'customers',
+        name     : 'adminCustomers',
+        component: () => import('../backend/pages/customer/Index'),
+        meta     : {
+            title: 'Customers List'
+        }
+    },
+    {
+        path     : 'profile',
+        name     : 'adminProfile',
+        component: () => import('../backend/pages/Profile'),
+        meta     : {
+            title: 'Admin Profile'
+        }
+    },
     //==============Products routes=================
     {
         path     : 'products',
@@ -82,44 +115,7 @@ const BackendRoutes = [
             title: 'ProductService Edit'
         }
     },
-    {
-        path     : 'orders',
-        name     : 'adminOrders',
-        component: () => import('../backend/pages/order/Index'),
-        meta     : {
-            title: 'Orders List'
-        }
-    }, {
-        path     : 'delivered-orders',
-        name     : 'adminDeliveredOrders',
-        component: () => import('../backend/pages/order/DeliveredOrders'),
-        meta     : {
-            title: 'Delivered Orders'
-        }
-    }, {
-        path     : 'orders/:id',
-        name     : 'adminOrderShow',
-        component: () => import('../backend/pages/order/Show'),
-        meta     : {
-            title: 'Order Details'
-        }
-    },
-    {
-        path     : 'customers',
-        name     : 'adminCustomers',
-        component: () => import('../backend/pages/customer/Index'),
-        meta     : {
-            title: 'Customers List'
-        }
-    },
-    {
-        path     : 'profile',
-        name     : 'adminProfile',
-        component: () => import('../backend/pages/Profile'),
-        meta     : {
-            title: 'Admin Profile'
-        }
-    },
+
 ];
 
 export default BackendRoutes;

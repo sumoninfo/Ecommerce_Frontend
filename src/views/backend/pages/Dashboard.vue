@@ -30,8 +30,8 @@
               <div class="rounded-full p-5 bg-blue-600"><i class="fas fa-server fa-2x fa-inverse"></i></div>
             </div>
             <div class="flex-1 text-right md:text-center">
-              <h5 class="font-bold uppercase text-gray-600">Total Products</h5>
-              <h3 class="font-bold text-3xl">{{ count.products }}</h3>
+              <h5 class="font-bold uppercase text-gray-600">Total Rooms</h5>
+              <h3 class="font-bold text-3xl">{{ count.rooms }}</h3>
             </div>
           </div>
         </div>
@@ -46,24 +46,8 @@
               <div class="rounded-full p-5 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-inverse"></i></div>
             </div>
             <div class="flex-1 text-right md:text-center">
-              <h5 class="font-bold uppercase text-gray-600">Total Orders</h5>
-              <h3 class="font-bold text-3xl">{{ count.orders }}</h3>
-            </div>
-          </div>
-        </div>
-        <!--/Metric Card-->
-      </div>
-      <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-        <!--Metric Card-->
-        <div
-            class="bg-gradient-to-b from-indigo-200 to-indigo-100 border-b-4 border-indigo-500 rounded-lg shadow-xl p-5">
-          <div class="flex flex-row items-center">
-            <div class="flex-shrink pr-4">
-              <div class="rounded-full p-5 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-inverse"></i></div>
-            </div>
-            <div class="flex-1 text-right md:text-center">
-              <h5 class="font-bold uppercase text-gray-600">Total Delivered Orders</h5>
-              <h3 class="font-bold text-3xl">{{ count.delivered_orders }}</h3>
+              <h5 class="font-bold uppercase text-gray-600">Total Bookings</h5>
+              <h3 class="font-bold text-3xl">{{ count.bookings }}</h3>
             </div>
           </div>
         </div>
@@ -83,24 +67,23 @@ export default {
   name: "AdminDashboard",
   data: () => ({
     count: {
-      customers       : 0,
-      products        : 0,
-      orders          : 0,
-      delivered_orders: 0,
+      customers: 0,
+      rooms    : 0,
+      bookings : 0,
     }
   }),
   mounted() {
-    this.getCountData();
+    this.getDashboardCountData();
   },
   methods: {
-    getCountData() {
+    getDashboardCountData() {
       ApiService.get(`/admin/dashboard`).then((res) => {
         this.count = res.data;
       }).catch(error => {
-          if (error?.response?.status == 403) {
-            JwtService.destroyToken();
-            this.$store.commit("GETUSER", {});
-          }
+        if (error?.response?.status == 403) {
+          JwtService.destroyToken();
+          this.$store.commit("GETUSER", {});
+        }
         this.$router.push({name: "userLogin"});
         NotificationService.error(error.response.data.message);
       })
