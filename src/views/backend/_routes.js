@@ -89,32 +89,7 @@ const BackendRoutes = [
         meta     : {
             title: 'Admin Profile'
         }
-    },
-    //==============Products routes=================
-    {
-        path     : 'products',
-        name     : 'adminProducts',
-        component: () => import('../backend/pages/product/Index'),
-        meta     : {
-            title: 'Products List'
-        }
-    },
-    {
-        path     : 'products/create',
-        name     : 'adminProductCreate',
-        component: () => import('../backend/pages/product/Create'),
-        meta     : {
-            title: 'ProductService Create'
-        }
-    },
-    {
-        path     : 'products/edit/:id',
-        name     : 'adminProductEdit',
-        component: () => import('../backend/pages/product/Create'),
-        meta     : {
-            title: 'ProductService Edit'
-        }
-    },
+    }
 
 ];
 

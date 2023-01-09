@@ -48,7 +48,7 @@
               </th>
               <th
                   class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                Total Order
+                Total Bookings
               </th>
               <th
                   class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -59,14 +59,14 @@
 
             <tbody class="bg-white">
             <template v-if="customers.length">
-              <tr v-for="(product, index) in customers">
+              <tr v-for="(customer, index) in customers">
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ ++index }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.name }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.email }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.email }}</td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ product.orders_count }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ customer.name }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ customer.email }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ customer.email }}</td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ customer.bookings_count }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  <button title="Delete" @click="destroy(product.id)" type="button"
+                  <button title="Delete" @click="destroy(customer.id)" type="button"
                           class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-trash-alt"></i>
                   </button>
