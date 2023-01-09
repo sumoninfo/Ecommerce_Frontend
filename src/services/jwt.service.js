@@ -1,7 +1,8 @@
-const ACCESS_TOKEN  = "access_token";
-const REFRESH_TOKEN = 'refresh_token';
-const EXPIRE_AT     = 'expires_at';
-const LOGGED_USER   = 'logged_user';
+const ACCESS_TOKEN   = "access_token";
+const FIREBASE_TOKEN = "firebase_token";
+const REFRESH_TOKEN  = 'refresh_token';
+const EXPIRE_AT      = 'expires_at';
+const LOGGED_USER    = 'logged_user';
 
 export const getToken = () => {
     return window.localStorage.getItem(ACCESS_TOKEN);
@@ -9,6 +10,14 @@ export const getToken = () => {
 
 export const saveToken = token => {
     window.localStorage.setItem(ACCESS_TOKEN, token);
+};
+
+export const getFirebaseToken = () => {
+    return window.localStorage.getItem(FIREBASE_TOKEN);
+};
+
+export const saveFirebaseToken = token => {
+    window.localStorage.setItem(FIREBASE_TOKEN, token);
 };
 
 export const getLoggedUser = () => {
@@ -26,4 +35,4 @@ export const destroyToken = () => {
     window.localStorage.removeItem(LOGGED_USER);
 };
 
-export default {getToken, saveToken, getLoggedUser, saveLoggedUser, destroyToken};
+export default {getToken, saveToken, getLoggedUser, saveLoggedUser, destroyToken, getFirebaseToken, saveFirebaseToken};

@@ -74,7 +74,11 @@ export default {
   }),
   methods: {
     login() {
-      ApiService.post('/login', this.form).then((res) => {
+      let form = {
+        ...this.form,
+        firebase_token: JwtService.getFirebaseToken()
+      }
+      ApiService.post('/login', form).then((res) => {
         JwtService.saveToken(res.data.access_token);
         JwtService.saveLoggedUser('user');
         localStorage.setItem("expires_at", res.data.expires_at);

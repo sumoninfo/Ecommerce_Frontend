@@ -15,13 +15,6 @@ const FrontendRoutes = [
             title: 'About'
         }
     }, {
-        path     : '/cart',
-        name     : 'cartPage',
-        component: () => import('./pages/Cart'),
-        meta     : {
-            title: 'Cart'
-        }
-    }, {
         path     : '/booking-now/:roomId',
         name     : 'bookingNow',
         component: () => import('./pages/Booking.vue'),

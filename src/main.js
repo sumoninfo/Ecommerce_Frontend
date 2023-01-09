@@ -5,6 +5,7 @@ import './scss/main.scss'
 import './assets/tailwind.css'
 // Filters
 import './filters/filters.js'
+import './plugins/firebase.js'
 //VueProgressBar
 import VueProgressBar  from 'vue-progressbar'
 
@@ -58,13 +59,10 @@ router.beforeEach((to, from, next) => {
     } else if (JwtService.getLoggedUser() == 'user') {
         authUser('user')
     }
-    console.log(to.name, 'to.name')
     //if user logged and user state login page then redirect to dashboard
     if (to.name == 'userLogin' || to.name == 'adminLogin') {
-        console.log(JwtService.getLoggedUser(), 'JwtService.getLoggedUser()')
         if (JwtService.getToken()) {
             let type= to.name.split('Login')[0];
-            console.log(type, 'type')
             next({name: `${type}Dashboard`});
         }
     }
