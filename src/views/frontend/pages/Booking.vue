@@ -22,44 +22,46 @@
       <div class="flex justify-between mt-2 mb-5">
         <span class="font-semibold text-sm">Sub Total: {{ room.price |numberFormat }}</span>
       </div>
-      <div class="border-t pb-2">
-        <label class=" font-medium inline-block mb-3 text-sm uppercase">Check In</label>
-        <input v-model="form.check_in" class="block p-2 text-gray-600 w-full text-sm" type="datetime-local">
-      </div>
-      <div class="border-t pb-2">
-        <label class=" font-medium inline-block mb-3 text-sm uppercase">Check Out</label>
-        <input v-model="form.check_out" class="block p-2 text-gray-600 w-full text-sm" type="datetime-local">
-      </div>
-      <div class="py-2">
-        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Contact Number: </label>
-        <input placeholder="Contact Number" id="note" v-model="form.number" type="text"
-               class="p-2 text-sm w-full"/>
-      </div>
-      <div class="py-2">
-        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Address: </label>
-        <textarea rows="3" placeholder="Address" id="note" v-model="form.address" type="text"
-                  class="p-2 text-sm w-full"></textarea>
-      </div>
-
-      <div class="py-2">
-        <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Booking Note</label>
-        <textarea rows="3" placeholder="Booking Note" id="note" v-model="form.note" type="text"
-                  class="p-2 text-sm w-full"></textarea>
-      </div>
-      <div class="border-t">
-        <div class="flex font-semibold justify-between py-6 text-sm uppercase">
-          <span>Grand Total</span>
-          <span>{{ getGrandTotal | numberFormat }}</span>
+      <form @submit.prevent="orderSubmit">
+        <div class="border-t pb-2">
+          <label class=" font-medium inline-block mb-3 text-sm uppercase">Check In</label>
+          <input required v-model="form.check_in" class="block p-2 text-gray-600 w-full text-sm" type="datetime-local">
         </div>
-        <button v-if="user_logged" @click="orderSubmit()" type="button"
-                class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
-          Checkout & Place an order
-        </button>
-        <button @click="loginFirst()" v-else type="button"
-                class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
-          login first
-        </button>
-      </div>
+        <div class="border-t pb-2">
+          <label class=" font-medium inline-block mb-3 text-sm uppercase">Check Out</label>
+          <input required v-model="form.check_out" class="block p-2 text-gray-600 w-full text-sm" type="datetime-local">
+        </div>
+        <div class="py-2">
+          <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Contact Number: </label>
+          <input required placeholder="Contact Number" id="note" v-model="form.customer_number" type="text"
+                 class="p-2 text-sm w-full"/>
+        </div>
+        <div class="py-2">
+          <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Address: </label>
+          <textarea required rows="3" placeholder="Address" id="note" v-model="form.address" type="text"
+                    class="p-2 text-sm w-full"></textarea>
+        </div>
+
+        <div class="py-2">
+          <label for="note" class="font-semibold inline-block mb-3 text-sm uppercase">Booking Note</label>
+          <textarea rows="3" placeholder="Booking Note" id="note" v-model="form.note" type="text"
+                    class="p-2 text-sm w-full"></textarea>
+        </div>
+        <div class="border-t">
+          <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+            <span>Grand Total</span>
+            <span>{{ getGrandTotal | numberFormat }}</span>
+          </div>
+          <button v-if="user_logged" type="submit"
+                  class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+            Checkout & Place an order
+          </button>
+          <button @click="loginFirst()" v-else type="button"
+                  class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+            login first
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -76,11 +78,11 @@ export default {
   components: {RoomComponent},
   data      : () => ({
         form       : {
-          check_in      : '',
-          check_out     : '',
-          contact_number: '',
-          note          : '',
-          address       : '',
+          check_in       : '',
+          check_out      : '',
+          customer_number: '',
+          note           : '',
+          address        : '',
         },
         room       : {},
         user_logged: false,
