@@ -19,8 +19,8 @@
 <script>
 import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
-import Pagination          from "@/components/Pagination";
-import OrderDetailsShow    from "../../../../components/OrderDetailsShow";
+import Pagination       from "@/components/Pagination";
+import OrderDetailsShow from "../../../../components/BookingDetailsShow.vue";
 
 export default {
   name      : "AdminOrderShow",

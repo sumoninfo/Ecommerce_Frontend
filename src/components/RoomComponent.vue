@@ -18,7 +18,7 @@
         </div>
 
 
-        <div class="">Price starting from:<span class="text-xl font-bold"> {{ room.price | numberFormat }}</span></div>
+        <div class="">Price: <span class="text-xl font-bold"> {{ room.price | numberFormat }}</span></div>
         <div class=""> Maximum Occupancy: {{ room.maximum_occupancy }}</div>
         <div class="my-2">Amenities:
           <span v-for="amenity in room.amenities"

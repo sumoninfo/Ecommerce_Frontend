@@ -65,11 +65,11 @@ const FrontendRoutes = [
         }
     },
     {
-        path     : '/order/:id',
-        name     : 'userOrderShow',
-        component: () => import('./user/order/Show'),
+        path     : '/booking/:id',
+        name     : 'userBookingShow',
+        component: () => import('./user/booking/Show'),
         meta     : {
-            title      : 'User Order Show',
+            title      : 'User Booking Show',
             requireAuth: true,
         }
     },

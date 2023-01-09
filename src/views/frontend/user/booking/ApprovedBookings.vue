@@ -3,7 +3,7 @@
     <div class="order-nav ">
       <a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl pb-3"
          href="#">
-        Delivered Orders
+        Approved Bookings
       </a>
       <form @submit.prevent="getLists()" class="border-t space-y-4 text-gray-700 p-5  flex-col md:flex-row pb-3">
         <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
@@ -35,8 +35,8 @@
             </tr>
             </thead>
             <tbody class="bg-white">
-            <template v-if="orders.length">
-              <tr v-for="(order, index) in orders">
+            <template v-if="bookings.length">
+              <tr v-for="(order, index) in bookings">
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">{{ order.order_no }}</td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   {{ order.sub_total | numberFormat }}
@@ -71,21 +71,22 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  <router-link title="Show Order" :to="{ name: 'userOrderShow', params: {id: order.id }, query:{'type':'delivered'}}"
+                  <router-link title="Show Order"
+                               :to="{ name: 'userOrderShow', params: {id: order.id }, query:{'type':'delivered'}}"
                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-3 rounded mr-1">
                     <i class="fas fa-eye"></i>
                   </router-link>
                 </td>
               </tr>
             </template>
-            <template v-if="!orders.length">
+            <template v-if="!bookings.length">
               <tr>
                 <th class="text-center font-weight-bolder h-20" colspan="100%">No data found</th>
               </tr>
             </template>
             </tbody>
           </table>
-          <pagination v-if="orders.length > 0" :pagination="pagination" @paginate="getLists()" :offset="5"/>
+          <pagination v-if="bookings.length > 0" :pagination="pagination" @paginate="getLists()" :offset="5"/>
         </div>
       </div>
     </div>
@@ -98,7 +99,7 @@ import NotificationService from "@/services/notification.service";
 import Pagination          from "@/components/Pagination";
 
 export default {
-  name      : "DeliveredOrders",
+  name      : "ApprovedBookings",
   components: {Pagination},
   data      : () => ({
     pagination: {
@@ -108,7 +109,7 @@ export default {
       per_page: 15,
       search  : ''
     },
-    orders    : [],
+    bookings    : [],
   }),
   mounted() {
     this.getLists();
@@ -120,8 +121,8 @@ export default {
         ...this.form,
         page: this.pagination.current_page
       }
-      ApiService.get(`/user/delivered-orders`, {params: params}).then((res) => {
-        this.orders     = res.data.data;
+      ApiService.get(`/user/delivered-bookings`, {params: params}).then((res) => {
+        this.bookings     = res.data.data;
         this.pagination = res.data.meta;
         this.$Progress.finish();
       }).catch(error => {

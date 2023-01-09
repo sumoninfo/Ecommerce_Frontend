@@ -1,28 +1,28 @@
 <template>
-  <OrderDetailsShow :order="order"/>
+  <BookingDetailsShow :booking="booking"/>
 </template>
 
 <script>
 import ApiService          from "@/services/api.service";
 import NotificationService from "@/services/notification.service";
-import OrderDetailsShow    from "../../../../components/OrderDetailsShow";
+import BookingDetailsShow  from "@/components/BookingDetailsShow";
 
 export default {
   name      : "show",
-  components: {OrderDetailsShow},
+  components: {BookingDetailsShow},
   data      : () => ({
-    order: {},
+    booking: {},
   }),
   mounted() {
-    this.getOrder(this.$route.params.id);
+    this.getBooking(this.$route.params.id);
   },
   methods: {
-    getOrder(id) {
+    getBooking(id) {
       let params = {
         type: this.$route.query.type
       }
-      ApiService.get(`/user/orders/${id}`, {params: params}).then((res) => {
-        this.order = res.data.data;
+      ApiService.get(`/user/bookings/${id}`, {params: params}).then((res) => {
+        this.booking = res.data.data;
       }).catch(error => {
         NotificationService.error(error.response.data.message);
       })
